@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #ff4d4d;
+            border: 2px solid #cc0000;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+        .envelope::before, .envelope::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ff4d4d;
+            border: 2px solid #cc0000;
+            transition: transform 0.3s;
+        }
+        .envelope::before {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid #ff4d4d;
+            top: -50px;
+            left: 0;
+        }
+        .envelope::after {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #ff4d4d;
+            bottom: -50px;
+            left: 0;
+        }
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 45px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0% 38%);
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+        .questions {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .message {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope" onclick="showQuestions()">
+        <div class="heart"></div>
+    </div>
+    <div class="questions">
+        <div class="question" id="question1">
+            <p>¿Me llamas la atención, se ve que eres una persona muy interesante, te gustaría que nos conociéramos?</p>
+            <div class="buttons">
+                <button onclick="answerYes()">Sí</button>
+                <button onclick="answerNo()">No</button>
+            </div>
+        </div>
+    </div>
+    <div class="message" id="loveMessage">
+        genial no estare guapo mucho menos mamado pero se querer bonito,ser detallista y tambiem se cocinar
+    </div>
+    <div class="message" id="disappointmentMessage">
+        que mal pense que esta vez funcionaria
+    </div>
+    
+    <script>
+        function showQuestions() {
+            document.querySelector('.envelope').style.display = 'none';
+            document.querySelector('.questions').style.display = 'flex';
+        }
+        function answerYes() {
+            sendEmail('Sí');
+            document.querySelector('.questions').style.display = 'none';
+            document.getElementById('loveMessage').style.display = 'block';
+        }
+        function answerNo() {
+            sendEmail('No');
+            document.querySelector('.questions').style.display = 'none';
+            document.getElementById('disappointmentMessage').style.display = 'block';
+        }
+        function sendEmail(answer) {
+            var email = 'ramses_gpu@outlook.com'; // Replace with your email
+            var subject = 'Respuesta de la encuesta';
+            var body = 'Respuesta: ' + answer;
+            window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        }
+    </script>
+</body>
+</html>
